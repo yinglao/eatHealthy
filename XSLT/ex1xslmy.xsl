@@ -24,6 +24,8 @@
 
     				<xsl:for-each select="BlogUsers/BlogUser">
     					<xsl:variable name = "username" select="UserName"></xsl:variable>
+                        <xsl:variable name = "post" select="/BlogApplication/BlogPosts/BlogPost[Comments/Comment/UserName = $username]"></xsl:variable>
+                        <xsl:variable name = "comment" select="/BlogApplication/BlogPosts/BlogPost/Comments/Comment[UserName/text() = $username]"></xsl:variable>
     					<tr>
     						<td>
     							<xsl:value-of select = "UserName"></xsl:value-of>
@@ -32,8 +34,14 @@
     							<xsl:value-of select = "FirstName"></xsl:value-of>
     						</td>
     						<td>
-    							<xsl:value-of select = "/BlogApplication/BlogPosts/BlogPost[UserName/text()=$username]/Title"></xsl:value-of>
+    							<xsl:value-of select = "$post/Title"></xsl:value-of>
     						</td>
+                            <td>
+                                <xsl:value-of select = "$comment/CommentId/text()"></xsl:value-of>
+                            </td>
+                            <td>
+                                <xsl:value-of select = "$comment/Content"></xsl:value-of>
+                            </td>
 
     					</tr>
     				</xsl:for-each>

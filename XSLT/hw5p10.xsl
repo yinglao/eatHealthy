@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="xs"
+    version="2.0">
+
+    <xsl:output method="html" indent="yes"></xsl:output>
+
+    <xsl:template match = "/ReviewApplication">
+        <html>
+            <head>
+                <title>HW5.10</title>
+            </head>
+            <body>
+                <h1>Reviews with Details</h1>
+                <table border="1">
+                    <tr>
+                        <th>RestaurantName</th>
+                        <th>FirstName</th>
+                        <th>Rating</th>
+                    </tr>
+                    <xsl:for-each select="Reviews/Review">
+                        <xsl:variable name="restaurantid" select="RestaurantId">
+                        </xsl:variable>
+                        <xsl:variable name="username" select="UserName"></xsl:variable>
+                        <tr>
+                            <td>
+                                <xsl:value-of select="/ReviewApplication/Companys/Company/Restaurants/Restaurant[RestaurantId=$restaurantid]/Name"></xsl:value-of>
+                            </td>
+                            <td>
+                                <xsl:value-of select="/ReviewApplication/Users/User[UserName=$username]/FirstName"></xsl:value-of>
+                            </td>
+                            <td>
+                                <xsl:value-of select="Rating"></xsl:value-of>
+                            </td>
+                        </tr>
+
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>
