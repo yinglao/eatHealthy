@@ -19,6 +19,9 @@ public class Inserter {
 		SitDownRestaurantDao sitDownRestaurantDao = SitDownRestaurantDao.getInstance();
 		TakeOutRestaurantDao takeOutRestaurantDao = TakeOutRestaurantDao.getInstance();
 		FoodCartRestaurantDao foodCartRestaurantDao = FoodCartRestaurantDao.getInstance();
+		ReviewsDao reviewsDao = ReviewsDao.getInstance();
+		RecommendationsDao recommendationsDao = RecommendationsDao.getInstance();
+		ReservationsDao reservationsDao = ReservationsDao.getInstance();
 		
 		//UsersDao tests
 		Users user = new Users("Bruce","password","Bruce","C","bruce@mail.com","5555555");
@@ -119,7 +122,73 @@ public class Inserter {
 		System.out.println(foodCartRestaurants.size());
 		foodCartRestaurantDao.delete(foodCartRestaurant);
 
+		//reviewsDao tests
+//		public Reviews create(Reviews review)
+//		public Reviews getReviewById(int reviewId)
+//		public List<Reviews> getReviewsByUserName(String userName)
+//		public List<Reviews> getReviewsByRestaurantId(int restaurantId)
+//		public Reviews delete(Reviews review)
+		
+		cal.set(2019, 2, 27, 12, 0, 0);
+		Date date2 = cal.getTime(); 
+		Restaurants restaurant2 = new Restaurants("restaurant2","about restaurant","menu","hours",true,Restaurants.CuisineType.valueOf("AMERICAN"),"street1","street2","seattle","wa",98195,company);
+		restaurantsDao.create(restaurant2);
+		Reviews review = new Reviews(date2, "Delightful!", 5.0, user ,restaurant2);
+		reviewsDao.create(review);
+		review = reviewsDao.getReviewById(1);
+		System.out.println(review.getContent() + " " + review.getUser().getUserName() + " " + review.getRestaurant().getName());
+		List<Reviews> reviews = reviewsDao.getReviewsByUserName("Bruce");
+		System.out.println(reviews.size());
+		reviews = reviewsDao.getReviewsByRestaurantId(5);
+		System.out.println(reviews.size());	
+		reviewsDao.delete(review);
+		
+		
+		// recommendationsDao tests
+//		public Recommendations create(Recommendations recommendation)
+//		public Recommendations getRecommendationById(int recommendationId)
+//		public List<Recommendations> getRecommendationsByUserName(String userName)
+//		public List<Recommendations> getRecommendationsByRestaurantId(int restaurantId)
+//		public Recommendations delete(Recommendations recommendation)
+		
+		Restaurants restaurant3 = new Restaurants("restaurant3","about restaurant","menu","hours",true,Restaurants.CuisineType.valueOf("ASIAN"),"street1","street2","seattle","wa",98195, company);
+		restaurantsDao.create(restaurant3);
+		Recommendations recommendation = new Recommendations(user ,restaurant3);
+		recommendationsDao.create(recommendation);
+		recommendation = recommendationsDao.getRecommendationById(1);
+		System.out.println(recommendation.getRecommendationId() + " " + recommendation.getUser().getUserName() + " " + recommendation.getRestaurant().getName());
+		List<Recommendations> recommendations = recommendationsDao.getRecommendationsByUserName("Bruce");
+		System.out.println(recommendations.size());
+		recommendations = recommendationsDao.getRecommendationsByRestaurantId(6);
+		System.out.println(recommendations.size());	
+		recommendationsDao.delete(recommendation);
+
+		
+		// reservationsDao tests
+//		public Reservations create(Reservations reservation)
+//		public Reservations getReservationById(int reservationId)
+//		public List<Reservations> getReservationsByUserName(String userName)
+//		public List<Reservations> getReservationsBySitDownRestaurantId(int sitDownRestaurantId)
+//		public Reservations delete(Reservations reservation)
+		cal.set(2015, 8, 5, 18, 30, 0);
+		Date date3 = cal.getTime(); 
+		cal.set(2015, 8, 5, 20, 0, 0);
+		Date date4 = cal.getTime(); 
+		SitDownRestaurant restaurant4 = new SitDownRestaurant("restaurant4","about restaurant","menu","hours",true,Restaurants.CuisineType.valueOf("EUROPEAN"),"street1","street2","seattle","wa",98195,company, 100);
+		restaurant4 = sitDownRestaurantDao.create(restaurant4);
+		Reservations reservation = new Reservations(date3, date4, 2, user,restaurant4);
+		reservationsDao.create(reservation);
+		reservation = reservationsDao.getReservationById(1);
+		System.out.println(reservation.getReservationId() + " " + reservation.getUser().getUserName() + " " + reservation.getSitDownRestaurant().getName());
+		List<Reservations> reservations = reservationsDao.getReservationsByUserName("Bruce");
+		System.out.println(reservations.size());
+		reservations = reservationsDao.getReservationsBySitDownRestaurantId(7);
+		System.out.println(reservations.size());
+		sitDownRestaurantDao.delete(restaurant4);
+//		reservationsDao.delete(reservation);
+
 	}
+	
 	
 	
 

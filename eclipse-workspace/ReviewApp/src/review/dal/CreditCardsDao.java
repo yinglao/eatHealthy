@@ -63,7 +63,7 @@ public class CreditCardsDao {
 				Long resultCardNumber = result.getLong("CardNumber");
 //				Date created =  new Date(results.getTimestamp("Created").getTime())
 				Date expiration = new Date(result.getTimestamp("Expiration").getTime());
-				System.out.println(expiration);
+//				System.out.println(expiration);
 				UsersDao usersDao = UsersDao.getInstance();
 				String userName = result.getString("UserName");
 				

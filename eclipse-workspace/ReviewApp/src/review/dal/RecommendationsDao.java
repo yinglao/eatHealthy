@@ -12,47 +12,43 @@ import java.util.List;
 import java.util.Date;
 
 
-public class ReservationsDao {
+public class RecommendationsDao {
 	protected ConnectionManager connectionManager;
-	private static ReservationsDao instance = null;
-	protected ReservationsDao() {
+	private static RecommendationsDao instance = null;
+	protected RecommendationsDao() {
 		connectionManager = new ConnectionManager();
 	}
-	public static ReservationsDao getInstance() {
+	public static RecommendationsDao getInstance() {
 		if (instance == null) {
-			instance = new ReservationsDao();
+			instance = new RecommendationsDao();
 		}
 		return instance;
 	}
-	public Reservations create(Reservations reservation) throws SQLException {
-		String insertReservation =
-				"INSERT INTO Reservations(Start, End, Size, UserName, RestaurantId) " +
-				"VALUES(?,?,?,?,?);";
+	public Recommendations create(Recommendations recommendation) throws SQLException {
+		String insertRecommendation =
+				"INSERT INTO Recommendations(UserName, RestaurantId) " +
+				"VALUES(?,?);";
 			Connection connection = null;
 			PreparedStatement insertStmt = null;
 			ResultSet resultKey = null;
 			try {
 				connection = connectionManager.getConnection();
-				insertStmt = connection.prepareStatement(insertReservation,
+				insertStmt = connection.prepareStatement(insertRecommendation,
 					Statement.RETURN_GENERATED_KEYS);
-				insertStmt.setTimestamp(1, new Timestamp(reservation.getStart().getTime()));
-				insertStmt.setTimestamp(2, new Timestamp(reservation.getStart().getTime()));
-				insertStmt.setInt(3, reservation.getSize());
-				insertStmt.setString(4, reservation.getUser().getUserName());
-				insertStmt.setInt(5, reservation.getSitDownRestaurant().getRestaurantId());
-				System.out.println(reservation.getSitDownRestaurant().getCapacity());
+				insertStmt.setString(1, recommendation.getUser().getUserName());
+				insertStmt.setInt(2, recommendation.getRestaurant().getRestaurantId());
 				insertStmt.executeUpdate();
 				
 				// Retrieve the auto-generated key and set it, so it can be used by the caller.
 				resultKey = insertStmt.getGeneratedKeys();
-				int reservationId = -1;
+				int recommendationId = -1;
 				if(resultKey.next()) {
-					reservationId = resultKey.getInt(1);
+					recommendationId = resultKey.getInt(1);
 				} else {
 					throw new SQLException("Unable to retrieve auto-generated key.");
 				}
-				reservation.setReservationId(reservationId);
-				return reservation;
+				recommendation.setRecommendationId(recommendationId);
+				return recommendation;
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw e;
@@ -69,33 +65,30 @@ public class ReservationsDao {
 			}
 		}
 
-	public Reservations getReservationById(int reservationId) throws SQLException {
-		String selectReservation =
+	public Recommendations getRecommendationById(int recommendationId) throws SQLException {
+		String selectRecommendation =
 				"SELECT * " +
-				"FROM Reservations " +
-				"WHERE ReservationId=?;";
+				"FROM Recommendations " +
+				"WHERE RecommendationId=?;";
 			Connection connection = null;
 			PreparedStatement selectStmt = null;
 			ResultSet results = null;
 			try {
 				connection = connectionManager.getConnection();
-				selectStmt = connection.prepareStatement(selectReservation);
-				selectStmt.setInt(1, reservationId);
+				selectStmt = connection.prepareStatement(selectRecommendation);
+				selectStmt.setInt(1, recommendationId);
 				results = selectStmt.executeQuery();
 				UsersDao usersDao = UsersDao.getInstance();
-				SitDownRestaurantDao sitDownRestaurantDao = SitDownRestaurantDao.getInstance();
+				RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
 				if(results.next()) {
-					int resultReservationId = results.getInt("ReservationId");
-					Date start = new Date(results.getTimestamp("Start").getTime());
-					Date end = new Date(results.getTimestamp("End").getTime());
-					int size = results.getInt("Size");
+					int resultRecommendationId = results.getInt("RecommendationId");
 					String userName = results.getString("UserName");
 					int restaurantId = results.getInt("RestaurantId");
 					
 					Users user = usersDao.getUserByUserName(userName);
-					SitDownRestaurant sitDownrestaurant = sitDownRestaurantDao.getSitDownRestaurantById(restaurantId);
-					Reservations reservation = new Reservations(resultReservationId, start, end, size, user, sitDownrestaurant);
-					return reservation;
+					Restaurants restaurant = restaurantsDao.getRestaurantById(restaurantId);
+					Recommendations recommendation = new Recommendations(resultRecommendationId, user, restaurant);
+					return recommendation;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -114,34 +107,31 @@ public class ReservationsDao {
 			return null;
 		}
 
-	public List<Reservations> getReservationsByUserName(String userName) throws SQLException {
-		List<Reservations> reservations = new ArrayList<Reservations>();
-		String selectReservations =
+	public List<Recommendations> getRecommendationsByUserName(String userName) throws SQLException {
+		List<Recommendations> recommendations = new ArrayList<Recommendations>();
+		String selectRecommendations =
 			"SELECT * " +
-			"FROM Reservations " + 
+			"FROM Recommendations " + 
 			"WHERE UserName=?;";
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
 		ResultSet results = null;
 		try {
 			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectReservations);
+			selectStmt = connection.prepareStatement(selectRecommendations);
 			selectStmt.setString(1,userName);
 			results = selectStmt.executeQuery();
-			SitDownRestaurantDao sitDownRestaurantDao = SitDownRestaurantDao.getInstance();
+			RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
 			UsersDao usersDao = UsersDao.getInstance();
 			while(results.next()) {
-				int reservationId = results.getInt("ReservationId");
-				Date start = new Date(results.getTimestamp("Start").getTime());
-				Date end = new Date(results.getTimestamp("End").getTime());
-				int size = results.getInt("Size");
+				int recommendationId = results.getInt("RecommendationId");
 				String resultUserName = results.getString("UserName");
 				int restaurantId = results.getInt("RestaurantId");
 				
 				Users user = usersDao.getUserByUserName(resultUserName);
-				SitDownRestaurant sitDownrestaurant = sitDownRestaurantDao.getSitDownRestaurantById(restaurantId);
-				Reservations reservation = new Reservations(reservationId, start, end, size, user, sitDownrestaurant);
-				reservations.add(reservation);
+				Restaurants restaurant = restaurantsDao.getRestaurantById(restaurantId);
+				Recommendations recommendation = new Recommendations(recommendationId, user, restaurant);
+				recommendations.add(recommendation);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,37 +147,34 @@ public class ReservationsDao {
 				results.close();
 			}
 		}
-		return reservations;
+		return recommendations;
 	}
 
-	public List<Reservations> getReservationsBySitDownRestaurantId(int restaurantId) throws SQLException {
-		List<Reservations> reservations = new ArrayList<Reservations>();
-		String selectReservations =
+	public List<Recommendations> getRecommendationsByRestaurantId(int restaurantId) throws SQLException {
+		List<Recommendations> recommendations = new ArrayList<Recommendations>();
+		String selectRecommendations =
 			"SELECT * " +
-			"FROM Reservations " + 
+			"FROM Recommendations " + 
 			"WHERE RestaurantId=?;";
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
 		ResultSet results = null;
 		try {
 			connection = connectionManager.getConnection();
-			selectStmt = connection.prepareStatement(selectReservations);
+			selectStmt = connection.prepareStatement(selectRecommendations);
 			selectStmt.setInt(1,restaurantId);
 			results = selectStmt.executeQuery();
-			SitDownRestaurantDao sitDownRestaurantDao = SitDownRestaurantDao.getInstance();
+			RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
 			UsersDao usersDao = UsersDao.getInstance();
 			while(results.next()) {
-				int reservationId = results.getInt("ReservationId");
-				Date start = new Date(results.getTimestamp("Start").getTime());
-				Date end = new Date(results.getTimestamp("End").getTime());
-				int size = results.getInt("Size");
+				int recommendationId = results.getInt("RecommendationId");
 				String resultUserName = results.getString("UserName");
 				int resultRestaurantId = results.getInt("RestaurantId");
 				
 				Users user = usersDao.getUserByUserName(resultUserName);
-				SitDownRestaurant sitDownrestaurant = sitDownRestaurantDao.getSitDownRestaurantById(resultRestaurantId);
-				Reservations reservation = new Reservations(reservationId, start, end, size, user, sitDownrestaurant);
-				reservations.add(reservation);
+				Restaurants restaurant = restaurantsDao.getRestaurantById(resultRestaurantId);
+				Recommendations recommendation = new Recommendations(recommendationId, user, restaurant);
+				recommendations.add(recommendation);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -203,17 +190,17 @@ public class ReservationsDao {
 				results.close();
 			}
 		}
-		return reservations;
+		return recommendations;
 	}
 	
-	public Reservations delete(Reservations reservation) throws SQLException {
-	String deleteReservation = "DELETE FROM Reservations WHERE ReservationId=?;";
+	public Recommendations delete(Recommendations recommendation) throws SQLException {
+	String deleteRecommendation = "DELETE FROM Recommendations WHERE RecommendationId=?;";
 	Connection connection = null;
 	PreparedStatement deleteStmt = null;
 	try {
 		connection = connectionManager.getConnection();
-		deleteStmt = connection.prepareStatement(deleteReservation);
-		deleteStmt.setInt(1, reservation.getReservationId());
+		deleteStmt = connection.prepareStatement(deleteRecommendation);
+		deleteStmt.setInt(1, recommendation.getRecommendationId());
 		deleteStmt.executeUpdate();
 
 		// Return null so the caller can no longer operate on the Persons instance.

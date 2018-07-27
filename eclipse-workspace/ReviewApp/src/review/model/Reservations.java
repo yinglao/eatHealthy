@@ -7,32 +7,30 @@ public class Reservations {
 	protected Date end;
 	protected int size;
 	protected Users user;
-	protected Restaurants restaurant;
+	protected SitDownRestaurant sitDownRestaurant;
 	public Reservations(int reservationId) {
 		super();
 		this.reservationId = reservationId;
 	}
-	public Reservations(int reservationId, Date start, Date end, int size, Users user, Restaurants restaurant) {
+	public Reservations(int reservationId, Date start, Date end, int size, Users user, SitDownRestaurant sitDownRestaurant) {
 		super();
 		this.reservationId = reservationId;
 		this.start = start;
 		this.end = end;
 		this.size = size;
 		this.user = user;
-		this.restaurant = restaurant;
+		this.sitDownRestaurant = sitDownRestaurant;
 	}
 	
-	public Reservations(Date start, Date end, int size, Users user, Restaurants restaurant) {
+	public Reservations(Date start, Date end, int size, Users user, SitDownRestaurant sitDownRestaurant) {
 		super();
 		this.start = start;
 		this.end = end;
 		this.size = size;
 		this.user = user;
-		this.restaurant = restaurant;
+		this.sitDownRestaurant = sitDownRestaurant;
 	}
-	public Reservations() {
-		super();
-	}
+	
 	
 	public int getReservationId() {
 		return reservationId;
@@ -64,11 +62,11 @@ public class Reservations {
 	public void setUser(Users user) {
 		this.user = user;
 	}
-	public Restaurants getRestaurant() {
-		return restaurant;
+	public SitDownRestaurant getSitDownRestaurant() {
+		return sitDownRestaurant;
 	}
-	public void setRestaurant(Restaurants restaurant) {
-		this.restaurant = restaurant;
+	public void setSitDownRestaurant(SitDownRestaurant sitDownRestaurant) {
+		this.sitDownRestaurant = sitDownRestaurant;
 	}
 	
 

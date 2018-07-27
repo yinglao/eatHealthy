@@ -47,6 +47,7 @@ public class SitDownRestaurantDao extends RestaurantsDao{
 			insertStmt.setInt(1, restaurant.getRestaurantId());
 			insertStmt.setInt(2, sitDownRestaurant.getCapacity());
 			insertStmt.executeUpdate();
+			sitDownRestaurant.setRestaurantId(restaurant.getRestaurantId());
 			return sitDownRestaurant;
 		} catch (SQLException e) {
 			e.printStackTrace();
