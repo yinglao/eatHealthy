@@ -11,8 +11,9 @@
     <title>Find a Food</title>
 </head>
 <body>
+<h1>Search for a food in our database!!!</h1>
 <form action="findfood" method="post">
-    <h1>Search for a food in our database!!!</h1>
+    <h2>Search for a food by ID</h2>
     <p>
         <label for="foodid">FoodId</label>
         <input id="foodid" name="foodid" value="${fn:escapeXml(param.foodid)}">
@@ -23,6 +24,19 @@
         <span id="successMessage"><b>${messages.success}</b></span>
     </p>
 </form>
+<form action="findfoodbykeyword" method="post">
+    <h2>Search for a food by keyword!!!</h2>
+    <p>
+        <label for="keyword">Keyword</label>
+        <input id="keyword" name="keyword" value="${fn:escapeXml(param.keyword)}">
+    </p>
+    <p>
+        <input type="submit">
+        <br/><br/><br/>
+        <span id="successMessage"><b>${messages.success}</b></span>
+    </p>
+</form>
+
 <br/>
 <div id="addFood"><a href="AddFood.jsp">Add your own food to our databse!!!</a></div>
 <div id="deleteFood"><a href="DeleteFood.jsp">Delete food from the database!!!</a></div>
@@ -39,7 +53,9 @@
         <th>FatFactor</th>
         <th>CarbohydrateFactor</th>
     </tr>
-   
+
+
+     <c:forEach items="${foods}" var="food" >
         <tr>
             <td><c:out value="${food.getFoodId()}" /></td>
             <td><c:out value="${food.getDescription()}" /></td>
@@ -47,8 +63,9 @@
             <td><c:out value="${food.getProteinFactor()}" /></td>
             <td><c:out value="${food.getFatFactor()}" /></td>
             <td><c:out value="${food.getCarbohydrateFactor()}" /></td>
+           
         </tr>
-    
+     </c:forEach>
 </table>
 </body>
 </html>

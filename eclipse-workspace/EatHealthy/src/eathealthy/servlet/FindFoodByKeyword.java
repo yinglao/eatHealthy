@@ -15,8 +15,8 @@ import eathealthy.dal.FoodDao;
 import eathealthy.dal.FoodGroupDao;
 import eathealthy.model.*;
 
-@WebServlet("/findfood")
-public class FindFood extends HttpServlet {
+@WebServlet("/findfoodbykeyword")
+public class FindFoodByKeyword extends HttpServlet {
 
     protected FoodDao foodDao;
 
@@ -44,27 +44,26 @@ public class FindFood extends HttpServlet {
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
         
-       
-        Food food = null;
+        List<Food> foods = null;
 
-        int foodId = Integer.parseInt(req.getParameter("foodid"));
-        if (foodId < 1) {
-            messages.put("success", "Food Id does not exsit.");
+
+        String keyword = req.getParameter("keyword");
+        if (keyword==null  || keyword.length()<1) {
+            messages.put("success", "Keyword does not exsit.");
         } else {
             try {
-                food = foodDao.getFoodById(foodId);
+                foods = foodDao.getFoodByKeywords(keyword);
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new IOException(e);
             }
-            messages.put("success", "Displaying results for " + foodId);
+            messages.put("success", "Displaying results for " + keyword);
+            messages.put("previousFoodKeyword", keyword);
 
         }
-        List<Food> list= new ArrayList<>();
-        list.add(food);
-        req.setAttribute("foods", list);
-
+        req.setAttribute("foods", foods);
         
+        //Just render the JSP.
         req.getRequestDispatcher("/FindFood.jsp").forward(req, resp);
     }
 }

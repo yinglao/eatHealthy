@@ -226,5 +226,53 @@ public class FoodDao {
 		}
 		return foodList;
 	}	
+	
+	/**
+	 * Get the matching Food records by fetching from your MySQL instance.
+	 * This runs a SELECT statement and returns a list of matching Food.
+	 */
+	public List<Food> getFoodByKeywords(String keyword) throws SQLException {
+		List<Food> foods = new ArrayList<Food>();
+		String selectFood =
+			"select * " + 
+			"from Food " + 
+			"where Description like ?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectFood);
+			selectStmt.setString(1, "%" + keyword + "%");
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int foodId = results.getInt("FoodId");
+				String description = results.getString("Description");
+				double nitrogenFactor = results.getDouble("N_Factor");
+				double proteinFactor = results.getDouble("Pro_Factor");
+				double fatFactor = results.getDouble("Fat_Factor");
+				double carbohydrateFactor = results.getDouble("CHO_Factor");
+				int foodGroupId = results.getInt("FoodGroupId");
+				FoodGroupDao foodGroupDao = FoodGroupDao.getInstance();
+				FoodGroup foodGroup = foodGroupDao.getFoodGroupById(foodGroupId); 
+				Food food = new Food(foodId, description, nitrogenFactor, proteinFactor, fatFactor, carbohydrateFactor, foodGroup);
+				foods.add(food);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return foods;
+	}
 
 }

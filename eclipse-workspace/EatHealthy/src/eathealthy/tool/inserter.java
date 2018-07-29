@@ -50,104 +50,107 @@ public class inserter {
 		food = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
 		food = foodDao.create(food);
 		food = foodDao.updateDescription(food, "newdesc");
-		foodDao.delete(food);		
-		
-		//langualDescriptionDao tests
-		LangualDescription langualDescription = langualDescriptionDao.getLangualDescriptionByFactor("A0107");
-		System.out.println(langualDescription.getLangualFactor() + " " + langualDescription.getDescription());
-		List<LangualDescription> langualDescriptions = langualDescriptionDao.getLangualDescriptionsByKeywords("Product");
-		System.out.println(langualDescriptions.size());
-		langualDescription = new LangualDescription("FFFFF", "DESCRIPTION");
-		langualDescription = langualDescriptionDao.create(langualDescription);
-		langualDescription = langualDescriptionDao.updateLangualDescription(langualDescription, "newfoodgroup");
-		langualDescriptionDao.delete(langualDescription);
+		foodDao.delete(food);
+		List<Food> foods = foodDao.getFoodByKeywords("butter");
+		System.out.println(foods.size());
 		
 		
-		//weightDao tests
-		Weight weight = weightDao.getWeightById(1);
-		System.out.println(weight.getWeightId() + " " + weight.getAmount() + " " + weight.getUnit() + " " + weight.getFood().getDescription() + " is " + weight.getWeightInGram() + " g");
-		Food food2 = foodDao.getFoodById(1001);
-		System.out.println(food2.getFoodId() + " " + food2.getDescription() + food2.getFoodGroup().getFoodGroupDesc());
-		List<Weight> weightList = weightDao.getWeightByFood(food2);
-		System.out.println(weightList.size());
-		weight = new Weight(1, "unit", 100, food2);
-		weight = weightDao.create(weight);
-		weight = weightDao.updateWeightInGram(weight, 1000);
-		weightDao.delete(weight);
-		
-		//nutrientDataDao tests
-		NutrientData nutrientData = nutrientDataDao.getNutrientDataById(1);
-		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getFood().getDescription() + " " + nutrientData.getNutrient().getDescription() + " " + nutrientData.getNutrientValue());
-		Food food3 = foodDao.getFoodById(1001);
-		Nutrient nutrient3 = nutrientDao.getNutrientById(203);
-		
-		System.out.println(food3.getFoodId() + " " + food3.getDescription() + food3.getFoodGroup().getFoodGroupDesc());
-		System.out.println(nutrient3.getNutrientId() + " " + nutrient3.getDescription() + " " + nutrient3.getTagName());
-		List<NutrientData> nutrientDataList = nutrientDataDao.getNutrientDataByFood(food3);
-		System.out.println(nutrientDataList.size());
-		//The following lines take a long time to run.
-//		List<NutrientData> nutrientDataList2 = nutrientDataDao.getNutrientDataByNutrient(nutrient3);
-//		System.out.println(nutrientDataList2.size());
-		Food food4 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
-		Nutrient nutrient4 = new Nutrient(900, "unit", "nutrient1", "nutrient1");
-		food4 = foodDao.create(food4);
-		nutrient4 = nutrientDao.create(nutrient4);
-		nutrientData = new NutrientData(10, food4, nutrient4);
-		nutrientData = nutrientDataDao.create(nutrientData);
-		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getNutrientValue());
-		nutrientData = nutrientDataDao.updateValue(nutrientData, 1000);
-		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getNutrientValue());
-		nutrientDataDao.delete(nutrientData);
-		foodDao.delete(food4);
-		nutrientDao.delete(nutrient4);
-		
-		
-		//footnoteDao tests
-		Footnote footnote = footnoteDao.getFootnoteById(1);
-		System.out.println(footnote.getFootnoteId() + " " + footnote.getFood().getDescription() + " " + footnote.getText());
-		Food food5 = foodDao.getFoodById(3945);
-		Nutrient nutrient5 = nutrientDao.getNutrientById(573);
-		
-		System.out.println(food5.getFoodId() + " " + food5.getDescription() + food5.getFoodGroup().getFoodGroupDesc());
-		System.out.println(nutrient5.getNutrientId() + " " + nutrient5.getDescription() + " " + nutrient5.getTagName());
-		List<Footnote> footnoteList = footnoteDao.getFootnoteByFood(food5);
-		System.out.println(footnoteList.size());
-		
-		footnote = footnoteDao.getFootnoteByFoodAndNutrient(food5, nutrient5);
-		System.out.println(footnote.getFootnoteId() + " " + footnote.getFood().getDescription() + " " + footnote.getText());
-		Food food6 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
-		Nutrient nutrient6 = new Nutrient(900, "unit", "nutrient1", "nutrient1");
-		food4 = foodDao.create(food6);
-		nutrient4 = nutrientDao.create(nutrient6);
-		footnote = new Footnote(food4, nutrient4, Footnote.FootnoteType.valueOf("D"), "text1");
-		footnote = footnoteDao.create(footnote);
-		System.out.println(footnote.getFootnoteId() + " " + footnote.getText());
-		footnote = footnoteDao.updateText(footnote, "newtext");
-		System.out.println(footnote.getFootnoteId() + " " + footnote.getText());
-		footnoteDao.delete(footnote);
-		foodDao.delete(food6);
-		nutrientDao.delete(nutrient6);		
-
-		//langualDao tests
-		Langual langual = langualDao.getLangualById(1);
-		System.out.println(langual.getLangualId() + " " + langual.getFood().getDescription() + " " + langual.getLangualDescription().getLangualFactor());
-		Food food7 = foodDao.getFoodById(2001);
-		
-		System.out.println(food5.getFoodId() + " " + food5.getDescription() + food5.getFoodGroup().getFoodGroupDesc());
-		List<Langual> langualList = langualDao.getLangualByFood(food7);
-		System.out.println(langualList.size());
-		
-		
-		Food food8 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
-		LangualDescription langualDescription8 = new LangualDescription("FFFFFF", "Desc");
-		food8 = foodDao.create(food8);
-		langualDescription8 = langualDescriptionDao.create(langualDescription8);
-		langual = new Langual(food8, langualDescription8);
-		langual = langualDao.create(langual);
-		System.out.println(langual.getLangualId() + " " + langual.getLangualDescription().getLangualFactor());
-		langualDao.delete(langual);
-		foodDao.delete(food8);
-		langualDescriptionDao.delete(langualDescription8);	
+//		//langualDescriptionDao tests
+//		LangualDescription langualDescription = langualDescriptionDao.getLangualDescriptionByFactor("A0107");
+//		System.out.println(langualDescription.getLangualFactor() + " " + langualDescription.getDescription());
+//		List<LangualDescription> langualDescriptions = langualDescriptionDao.getLangualDescriptionsByKeywords("Product");
+//		System.out.println(langualDescriptions.size());
+//		langualDescription = new LangualDescription("FFFFF", "DESCRIPTION");
+//		langualDescription = langualDescriptionDao.create(langualDescription);
+//		langualDescription = langualDescriptionDao.updateLangualDescription(langualDescription, "newfoodgroup");
+//		langualDescriptionDao.delete(langualDescription);
+//		
+//		
+//		//weightDao tests
+//		Weight weight = weightDao.getWeightById(1);
+//		System.out.println(weight.getWeightId() + " " + weight.getAmount() + " " + weight.getUnit() + " " + weight.getFood().getDescription() + " is " + weight.getWeightInGram() + " g");
+//		Food food2 = foodDao.getFoodById(1001);
+//		System.out.println(food2.getFoodId() + " " + food2.getDescription() + food2.getFoodGroup().getFoodGroupDesc());
+//		List<Weight> weightList = weightDao.getWeightByFood(food2);
+//		System.out.println(weightList.size());
+//		weight = new Weight(1, "unit", 100, food2);
+//		weight = weightDao.create(weight);
+//		weight = weightDao.updateWeightInGram(weight, 1000);
+//		weightDao.delete(weight);
+//		
+//		//nutrientDataDao tests
+//		NutrientData nutrientData = nutrientDataDao.getNutrientDataById(1);
+//		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getFood().getDescription() + " " + nutrientData.getNutrient().getDescription() + " " + nutrientData.getNutrientValue());
+//		Food food3 = foodDao.getFoodById(1001);
+//		Nutrient nutrient3 = nutrientDao.getNutrientById(203);
+//		
+//		System.out.println(food3.getFoodId() + " " + food3.getDescription() + food3.getFoodGroup().getFoodGroupDesc());
+//		System.out.println(nutrient3.getNutrientId() + " " + nutrient3.getDescription() + " " + nutrient3.getTagName());
+//		List<NutrientData> nutrientDataList = nutrientDataDao.getNutrientDataByFood(food3);
+//		System.out.println(nutrientDataList.size());
+//		//The following lines take a long time to run.
+////		List<NutrientData> nutrientDataList2 = nutrientDataDao.getNutrientDataByNutrient(nutrient3);
+////		System.out.println(nutrientDataList2.size());
+//		Food food4 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
+//		Nutrient nutrient4 = new Nutrient(900, "unit", "nutrient1", "nutrient1");
+//		food4 = foodDao.create(food4);
+//		nutrient4 = nutrientDao.create(nutrient4);
+//		nutrientData = new NutrientData(10, food4, nutrient4);
+//		nutrientData = nutrientDataDao.create(nutrientData);
+//		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getNutrientValue());
+//		nutrientData = nutrientDataDao.updateValue(nutrientData, 1000);
+//		System.out.println(nutrientData.getNutrientDataId() + " " + nutrientData.getNutrientValue());
+//		nutrientDataDao.delete(nutrientData);
+//		foodDao.delete(food4);
+//		nutrientDao.delete(nutrient4);
+//		
+//		
+//		//footnoteDao tests
+//		Footnote footnote = footnoteDao.getFootnoteById(1);
+//		System.out.println(footnote.getFootnoteId() + " " + footnote.getFood().getDescription() + " " + footnote.getText());
+//		Food food5 = foodDao.getFoodById(3945);
+//		Nutrient nutrient5 = nutrientDao.getNutrientById(573);
+//		
+//		System.out.println(food5.getFoodId() + " " + food5.getDescription() + food5.getFoodGroup().getFoodGroupDesc());
+//		System.out.println(nutrient5.getNutrientId() + " " + nutrient5.getDescription() + " " + nutrient5.getTagName());
+//		List<Footnote> footnoteList = footnoteDao.getFootnoteByFood(food5);
+//		System.out.println(footnoteList.size());
+//		
+//		footnote = footnoteDao.getFootnoteByFoodAndNutrient(food5, nutrient5);
+//		System.out.println(footnote.getFootnoteId() + " " + footnote.getFood().getDescription() + " " + footnote.getText());
+//		Food food6 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
+//		Nutrient nutrient6 = new Nutrient(900, "unit", "nutrient1", "nutrient1");
+//		food4 = foodDao.create(food6);
+//		nutrient4 = nutrientDao.create(nutrient6);
+//		footnote = new Footnote(food4, nutrient4, Footnote.FootnoteType.valueOf("D"), "text1");
+//		footnote = footnoteDao.create(footnote);
+//		System.out.println(footnote.getFootnoteId() + " " + footnote.getText());
+//		footnote = footnoteDao.updateText(footnote, "newtext");
+//		System.out.println(footnote.getFootnoteId() + " " + footnote.getText());
+//		footnoteDao.delete(footnote);
+//		foodDao.delete(food6);
+//		nutrientDao.delete(nutrient6);		
+//
+//		//langualDao tests
+//		Langual langual = langualDao.getLangualById(1);
+//		System.out.println(langual.getLangualId() + " " + langual.getFood().getDescription() + " " + langual.getLangualDescription().getLangualFactor());
+//		Food food7 = foodDao.getFoodById(2001);
+//		
+//		System.out.println(food5.getFoodId() + " " + food5.getDescription() + food5.getFoodGroup().getFoodGroupDesc());
+//		List<Langual> langualList = langualDao.getLangualByFood(food7);
+//		System.out.println(langualList.size());
+//		
+//		
+//		Food food8 = new Food(93601, "desc", 0.1,0.1,0.1,0.1,foodGroup2);
+//		LangualDescription langualDescription8 = new LangualDescription("FFFFFF", "Desc");
+//		food8 = foodDao.create(food8);
+//		langualDescription8 = langualDescriptionDao.create(langualDescription8);
+//		langual = new Langual(food8, langualDescription8);
+//		langual = langualDao.create(langual);
+//		System.out.println(langual.getLangualId() + " " + langual.getLangualDescription().getLangualFactor());
+//		langualDao.delete(langual);
+//		foodDao.delete(food8);
+//		langualDescriptionDao.delete(langualDescription8);	
 	}
 
 }
