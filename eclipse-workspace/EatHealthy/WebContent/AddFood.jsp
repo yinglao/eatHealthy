@@ -9,59 +9,77 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Add a Food</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Add your food to our database!!!</h1>
-<form action="addfood" method="post">
-    <p>
-        <label for="foodid">FoodId</label>
-        <input id="foodid" name="foodid" value="">
-    </p>
-    <p>
-        <label for="description">Description</label>
-        <input id="description" name="description" value="">
-    </p>
-    <p>
-        <label for="nitrogenfactor">NitrogenFactor</label>
-        <input id="nitrogenfactor" name="nitrogenfactor" value="">
-    </p>
-    <p>
-        <label for="proteinfactor">ProteinFactor</label>
-        <input id="proteinfactor" name="proteinfactor" value="">
-    </p>
-    <p>
-        <label for="fatfactor">FatFactor</label>
-        <input id="fatfactor" name="fatfactor" value="">
-    </p>
-    <p>
-        <label for="carbohydratefactor">CarbohydrateFactor</label>
-        <input id="carbohydratefactor" name="carbohydratefactor" value="">
-   
-    <p>
-        <label for="foodgroupid">FoodGroupId</label>
-        <input id="foodgroupid" name="foodgroupid" value="">
-    </p>
-    
-    
-    <p>
-        <label for="foodgroupdesc">FoodGroupDescription</label>
-        <input id="foodgroupdesc" name="foodgroupdesc" value="">
-    </p>
-    
-    
-    
-        <input type="submit">
-    </p>
+<br/>
+<div id="addFood" class="btn btn-default"><a href="AddFood.jsp">Add your own food to our databse</a></div>
+<div id="deleteFood" class="btn btn-default"><a href="DeleteFood.jsp">Delete food from the database</a></div>
+<div id="findFood" class="btn btn-default"><a href="FindFood.jsp">Find food from the database</a></div>
+<div id="updateFood" class="btn btn-default"><a href="UpdateFood.jsp">Update the food description</a></div>
+<br/>
+<div class="jumbotron">
+	<h1>Add your food to our database!!!</h1>
+</div>
+<form class="form-horizontal" action="addfood" method="post">
+    <div class="form-group">
+        <label for="foodid" class="col-sm-2 control-label">FoodId</label>
+        <div class="col-sm-10">
+        	<input id="foodid" class="form-control" name="foodid" value="" placeholder="FoodId">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+        	<input id="description" class="form-control" name="description" value="" placeholder="Description">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nitrogenfactor" class="col-sm-2 control-label">NitrogenFactor</label>
+        <div class="col-sm-10">
+        	<input id="nitrogenfactor" class="form-control" name="nitrogenfactor" value="" placeholder="NitrogenFactor">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="proteinfactor" class="col-sm-2 control-label">ProteinFactor</label>
+        <div class="col-sm-10">
+        	<input id="proteinfactor" class="form-control" name="proteinfactor" value="" placeholder="ProteinFactor">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="fatfactor" class="col-sm-2 control-label">FatFactor</label>
+        <div class="col-sm-10">
+        	<input id="fatfactor" class="form-control" name="fatfactor" value="" placeholder="FatFactor">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="carbohydratefactor" class="col-sm-2 control-label">CarbohydrateFactor</label>
+        <div class="col-sm-10">
+        	<input id="carbohydratefactor" class="form-control" name="carbohydratefactor" value="" placeholder="CarbohydrateFactor">
+        </div>
+   </div>
+    <div class="form-group">
+        <label for="foodgroupid" class="col-sm-2 control-label">FoodGroupId</label>
+        <div class="col-sm-10">
+        	<input id="foodgroupid" class="form-control" name="foodgroupid" value="" placeholder="FoodGroupId">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="foodgroupdesc" class="col-sm-2 control-label">FoodGroupDescription</label>
+        <div class="col-sm-10">
+        	<input id="foodgroupdesc" class="form-control" name="foodgroupdesc" value="" placeholder="FoodGroupDescription">
+        </div>
+    </div>
+    <div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10">
+      		<button type="submit" class="btn btn-primary">Add Food</button>
+    	</div>
+  	</div>
 </form>
 <br/><br/>
 <p>
-    <span id="successMessage"><b>${messages.success}</b></span>
+    <span class="label label-warning" id="successMessage"><b>${messages.success}</b></span>
 </p>
-<br/>
-<div id="addFood"><a href="AddFood.jsp">Add your own food to our databse!!!</a></div>
-<div id="deleteFood"><a href="DeleteFood.jsp">Delete food from the database!!!</a></div>
-<div id="findFood"><a href="FindFood.jsp">Find food from the database!!!</a></div>
-<div id="updateFood"><a href="UpdateFood.jsp">Update the food description!!!</a></div>
-<br/>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
