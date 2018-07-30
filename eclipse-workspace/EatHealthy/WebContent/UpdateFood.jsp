@@ -9,31 +9,41 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Update a Food</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<br/>
+<div id="addFood" class="btn btn-default"><a href="AddFood.jsp">Add your own food to our databse</a></div>
+<div id="deleteFood" class="btn btn-default"><a href="DeleteFood.jsp">Delete food from the database</a></div>
+<div id="findFood" class="btn btn-default"><a href="FindFood.jsp">Find food from the database</a></div>
+<div id="updateFood" class="btn btn-default"><a href="UpdateFood.jsp">Update the food description</a></div>
+<br/>
+<div class="jumbotron">
 <h1>Update a Food</h1>
-<form action="foodupdate" method="post">
-    <p>
-        <label for="foodid">Food Id</label>
-        <input id="foodid" name="foodid" value="${fn:escapeXml(param.foodid)}">
-    </p>
-    <p>
-        <label for="description">New Description</label>
-        <input id="description" name="description" value="">
-    </p>
-    <p>
-        <input type="submit">
-    </p>
+</div>
+<form  class="form-horizontal" action="foodupdate" method="post">
+    <div class="form-group">
+        <label for="foodid" class="col-sm-2 control-label">FoodId</label>
+                <div class="col-sm-10">
+        			<input id="foodid" class="form-control" name="foodid" value="${fn:escapeXml(param.foodid)}" placeholder="FoodId">
+        			</div>
+    </div>
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">New Description</label>
+                <div class="col-sm-10">
+        			<input id="description" class="form-control" name="description" value="" placeholder="New Description">
+        			</div>
+    </div>
+    <div class="form-group">
+        	<div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Update Food</button>
+        </div>
+    </div>
 </form>
 <br/><br/>
 <p>
-    <span id="successMessage"><b>${messages.success}</b></span>
+    <span class="label label-warning" id="successMessage"><b>${messages.success}</b></span>
 </p>
-<br/>
-<div id="addFood"><a href="AddFood.jsp">Add your own food to our databse!!!</a></div>
-<div id="deleteFood"><a href="DeleteFood.jsp">Delete food from the database!!!</a></div>
-<div id="findFood"><a href="FindFood.jsp">Find food from the database!!!</a></div>
-<div id="updateFood"><a href="UpdateFood.jsp">Update the food description!!!</a></div>
-<br/>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
