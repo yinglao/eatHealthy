@@ -8,27 +8,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Find a Food</title>
+    <title>Find Nutrition</title>
 </head>
 <body>
-<h1>Search for a food in our database!!!</h1>
-<form action="findfood" method="post">
-    <h2>Search for a food by ID</h2>
+<h1>Search for the Nutrition Value in our database!!!</h1>
+<form action="findnutrientbyfoodid" method="post">
+    <h2>Search the nutrition for a food by its ID</h2>
     <p>
         <label for="foodid">FoodId</label>
         <input id="foodid" name="foodid" value="${fn:escapeXml(param.foodid)}">
-    </p>
-    <p>
-        <input type="submit">
-        <br/><br/><br/>
-        <span id="successMessage"><b>${messages.success}</b></span>
-    </p>
-</form>
-<form action="findfoodbykeyword" method="post">
-    <h2>Search for a food by keyword!!!</h2>
-    <p>
-        <label for="keyword">Keyword</label>
-        <input id="keyword" name="keyword" value="${fn:escapeXml(param.keyword)}">
     </p>
     <p>
         <input type="submit">
@@ -43,28 +31,22 @@
 <div id="findFood"><a href="FindFood.jsp">Find food from the database!!!</a></div>
 <div id="updateFood"><a href="UpdateFood.jsp">Update the food description!!!</a></div>
 <br/>
-<h1>Matching Food</h1>
+<h1>Matching Nutrition</h1>
 <table border="1">
     <tr>
         <th>FoodId</th>
-        <th>Description</th>
-        <th>NitrogenFactor</th>
-        <th>ProteinFactor</th>
-        <th>FatFactor</th>
-        <th>CarbohydrateFactor</th>
-        <th>Nutrient Data</th>
+        <th>Nutrient Description</th>
+        <th>Nutrient Value(unit/100g)</th>
+        <th>Unit</th>
     </tr>
 
 
-     <c:forEach items="${foods}" var="food" >
+     <c:forEach items="${nutrientDataList}" var="nutrientData" >
         <tr>
-            <td><c:out value="${food.getFoodId()}" /></td>
-            <td><c:out value="${food.getDescription()}" /></td>
-            <td><c:out value="${food.getNitrogenFactor()}" /></td>
-            <td><c:out value="${food.getProteinFactor()}" /></td>
-            <td><c:out value="${food.getFatFactor()}" /></td>
-            <td><c:out value="${food.getCarbohydrateFactor()}" /></td>
-            <td><a href="findnutrientbyfoodid?foodid=<c:out value="${food.getFoodId()}"/>">Nutrient Data</a></td>
+            <td><c:out value="${nutrientData.getFood().getFoodId()}" /></td>
+            <td><c:out value="${nutrientData.getNutrient().getDescription()}" /></td>
+            <td><c:out value="${nutrientData.getNutrientValue()}" /></td>
+            <td><c:out value="${nutrientData.getNutrient().getUnits()}" /></td>
         </tr>
      </c:forEach>
 </table>
