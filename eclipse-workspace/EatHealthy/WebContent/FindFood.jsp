@@ -17,6 +17,7 @@
 <div id="deleteFood" class="btn btn-default"><a href="DeleteFood.jsp">Delete food from the database</a></div>
 <div id="findFood" class="btn btn-default"><a href="FindFood.jsp">Find food from the database</a></div>
 <div id="updateFood" class="btn btn-default"><a href="UpdateFood.jsp">Update the food description</a></div>
+<div id="checkMyList" class="btn btn-default"><form action="customerlist" method="get"><button>Check the list</button></form></div>
 <br/>
 <div class="jumbotron">
 <h1>Search for a food in our database</h1>
@@ -57,30 +58,75 @@
 <div class="jumbotron">
 <h1>Matching Food</h1>
 </div>
-<table border="1" class="table table-striped">
-    <tr>
-        <th>FoodId</th>
-        <th>Description</th>
-        <th>NitrogenFactor</th>
-        <th>ProteinFactor</th>
-        <th>FatFactor</th>
-        <th>CarbohydrateFactor</th>
-        <th>Nutrient Data</th>
-    </tr>
+<form>
+    <div class="form-row">
+    	<div class="col">
+        	FoodId
+        </div>
+        <div class="col-5">
+        	Description
+        </div>
+        <div class="col">
+        	NitrogenFactor
+        </div>
+        <div class="col">
+        	ProteinFactor
+        </div>
+        <div class="col">
+        	FatFactor
+        </div>
+        <div class="col">
+        	CarbohydrateFactor
+        </div>
+        <div class="col">
+        	Nutrient Data
+        </div>
+        <div class="col">
+        	Amount
+        </div>
+        <div class="col">
+        	Add To List
+        </div>
+    </div>
 
-
+</form>
+<br/>
+<div>
      <c:forEach items="${foods}" var="food" >
-        <tr>
-            <td><c:out value="${food.getFoodId()}" /></td>
-            <td><c:out value="${food.getDescription()}" /></td>
-            <td><c:out value="${food.getNitrogenFactor()}" /></td>
-            <td><c:out value="${food.getProteinFactor()}" /></td>
-            <td><c:out value="${food.getFatFactor()}" /></td>
-            <td><c:out value="${food.getCarbohydrateFactor()}" /></td>
-            <td><a href="findnutrientbyfoodid?foodid=<c:out value="${food.getFoodId()}"/>">Nutrient Data</a></td>
-        </tr>
+     	<form action="customerlist" method="post">
+     	<div class="form-row">
+     	    <div class="col">
+     	   		<input name="foodId" value="${food.getFoodId()}" readonly class="form-control input-sm">
+     		</div>
+           	<div class="col-5">
+           		<c:out value="${food.getDescription()}" />
+           	</div>
+           	<div class="col">
+           		<c:out value="${food.getNitrogenFactor()}" />
+           	</div>
+           	<div class="col">
+           		<c:out value="${food.getProteinFactor()}" />
+            </div>
+            <div class="col">
+           		<c:out value="${food.getFatFactor()}" />
+            </div>
+           	<div class="col">
+           		<c:out value="${food.getCarbohydrateFactor()}" />
+           	</div>
+          	<div class="col">
+           		<a href="findnutrientbyfoodid?foodid=<c:out value="${food.getFoodId()}"/>">Nutrient Data</a>
+           	</div>
+           	<div class="col">
+           		<input name="amount" class="form-control input-sm">
+           	</div>
+           <div class="col">
+           		<button type="submit" class="btn btn-primary">add</button>
+           </div>
+        </div>
+        </form>   
      </c:forEach>
-</table>
+</div> 
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>
