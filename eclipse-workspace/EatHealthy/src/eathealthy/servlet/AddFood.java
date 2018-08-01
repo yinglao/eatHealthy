@@ -12,6 +12,8 @@ import javax.servlet.http.*;
 
 import eathealthy.dal.FoodDao;
 import eathealthy.dal.FoodGroupDao;
+import eathealthy.dal.NutrientDao;
+import eathealthy.dal.NutrientDataDao;
 import eathealthy.model.*;
 
 @WebServlet("/addfood")
@@ -53,11 +55,32 @@ public class AddFood extends HttpServlet {
         String foodGroupDesc = req.getParameter("foodgroupdesc");
         
         FoodGroup foodGroup = new FoodGroup(foodGroupId, foodGroupDesc);
-         
+        
+        double proteinpercentage = Double.parseDouble(req.getParameter("proteinpercentage"));
+        double fatpercentage = Double.parseDouble(req.getParameter("fatpercentage"));
+        double carbohydratepercentage = Double.parseDouble(req.getParameter("carbohydratepercentage"));
+        double calorie = Double.parseDouble(req.getParameter("calorie"));
+        
         try {
         	Food food = new Food (foodId, description, nitrogenFactor, proteinFactor, fatFactor, carbohydrateFactor, foodGroup);
         	food = foodDao.create(food);
         	messages.put("success", "Successfully created " + foodId);
+        	
+        	NutrientDao nutrientDao = NutrientDao.getInstance();
+        	NutrientData data1 = new NutrientData(proteinpercentage,food,nutrientDao.getNutrientById(203));
+        	NutrientData data2 = new NutrientData(fatpercentage,food,nutrientDao.getNutrientById(204));
+        	NutrientData data3 = new NutrientData(carbohydratepercentage,food,nutrientDao.getNutrientById(205));
+        	NutrientData data4 = new NutrientData(calorie,food,nutrientDao.getNutrientById(208));
+        	NutrientDataDao nutrientDataDao = NutrientDataDao.getInstance();
+        	System.out.println("1");
+        	data1 = nutrientDataDao.create(data1);
+        	System.out.println("2");
+        	data2 = nutrientDataDao.create(data2);
+        	System.out.println("3");
+        	data3 = nutrientDataDao.create(data3);
+        	System.out.println("4");
+        	data4 = nutrientDataDao.create(data4);
+        	System.out.println("5");
         } catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);

@@ -70,6 +70,41 @@
         	<input id="foodgroupdesc" class="form-control" name="foodgroupdesc" value="" placeholder="FoodGroupDescription">
         </div>
     </div>
+    
+    
+    
+    
+    
+    <div class="form-group">
+        <label for="proteinpercentage" class="col-sm-2 control-label">ProteinPercentage</label>
+        <div class="col-sm-10">
+        	<input id="proteinpercentage" class="form-control" name="proteinpercentage" value="" placeholder="ProteinPercentage">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="fatpercentage" class="col-sm-2 control-label">FatPercentage</label>
+        <div class="col-sm-10">
+        	<input id="fatpercentage" class="form-control" name="fatpercentage" value="" placeholder="FatPercentage">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="carbohydratepercentage" class="col-sm-2 control-label">CarbohydratePercentage</label>
+        <div class="col-sm-10">
+        	<input id="carbohydratepercentage" class="form-control" name="carbohydratepercentage" value="" placeholder="CarbohydratePercentage">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="calorie" class="col-sm-2 control-label">Calorie(kCal/100g)</label>
+        <div class="col-sm-10">
+        	<input id="calorie" class="form-control" name="calorie" value="" placeholder="Calorie(kCal/100g)">
+        </div>
+    </div>
+    
+    
+    
     <div class="form-group">
     	<div class="col-sm-offset-2 col-sm-10">
       		<button type="submit" class="btn btn-primary">Add Food</button>
