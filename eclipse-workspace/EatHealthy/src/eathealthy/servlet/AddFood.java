@@ -72,15 +72,16 @@ public class AddFood extends HttpServlet {
         	NutrientData data3 = new NutrientData(carbohydratepercentage,food,nutrientDao.getNutrientById(205));
         	NutrientData data4 = new NutrientData(calorie,food,nutrientDao.getNutrientById(208));
         	NutrientDataDao nutrientDataDao = NutrientDataDao.getInstance();
-        	System.out.println("1");
+
         	data1 = nutrientDataDao.create(data1);
-        	System.out.println("2");
+
         	data2 = nutrientDataDao.create(data2);
-        	System.out.println("3");
+
         	data3 = nutrientDataDao.create(data3);
-        	System.out.println("4");
-        	data4 = nutrientDataDao.create(data4);
-        	System.out.println("5");
+
+        	
+        	data5 = nutrientDataDao.create(data4);
+
         } catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);

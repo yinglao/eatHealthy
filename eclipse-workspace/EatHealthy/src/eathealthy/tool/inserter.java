@@ -19,12 +19,15 @@ public class inserter {
 		LangualDescriptionDao langualDescriptionDao = LangualDescriptionDao.getInstance();
 		WeightDao weightDao = WeightDao.getInstance();
 		NutrientDataDao nutrientDataDao = NutrientDataDao.getInstance();
-		FootnoteDao footnoteDao = FootnoteDao.getInstance();
 		LangualDao langualDao = LangualDao.getInstance();
 		
-		NutrientData data1 = new NutrientData(22, new Food(12, "desc", 0.1,0.1,0.1,0.1,new FoodGroup(null)),
-				nutrientDao.getNutrientById(203));
+		
+		
+		
+		NutrientData data1 = new NutrientData(22,foodDao.getFoodById(22),nutrientDao.getNutrientById(203));
+		System.out.println("Before");
 		nutrientDataDao.create(data1);
+		System.out.println("After");
 /*
 		//foodGroupDao tests
 		FoodGroup foodGroup = foodGroupDao.getFoodGroupById(100);

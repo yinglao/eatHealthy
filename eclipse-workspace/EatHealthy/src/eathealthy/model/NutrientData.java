@@ -19,6 +19,12 @@ public class NutrientData {
 		this.food = food;
 		this.nutrient = nutrient;
 	}
+	
+	public NutrientData(Food food, Nutrient nutrient) {
+		super();
+		this.food = food;
+		this.nutrient = nutrient;
+	}
 
 	public int getNutrientDataId() {
 		return NutrientDataId;

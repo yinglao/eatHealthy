@@ -91,14 +91,14 @@ public class CustomerList extends HttpServlet {
             totalProtein += nutrientDataList.get(0).getNutrientValue() * amount;
             totalFat += nutrientDataList.get(1).getNutrientValue() * amount;
             totalCarbohydrate += nutrientDataList.get(2).getNutrientValue() * amount;
-            totalCalorie += nutrientDataList.get(4).getNutrientValue() * amount;
+            totalCalorie += nutrientDataList.get(nutrientDataList.size()>4?4:3).getNutrientValue() * amount;
             
             foodNutrientList.add(new FoodNutrient(food,
             		amount,
             		nutrientDataList.get(0).getNutrientValue(),
             		nutrientDataList.get(1).getNutrientValue(),
             		nutrientDataList.get(2).getNutrientValue(),
-            		nutrientDataList.get(4).getNutrientValue()));
+            		nutrientDataList.get(nutrientDataList.size()>4?4:3).getNutrientValue()));
         }
         req.getRequestDispatcher("/FindFood.jsp").forward(req, resp);
     }
